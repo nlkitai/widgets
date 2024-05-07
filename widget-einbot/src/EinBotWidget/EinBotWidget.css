@@ -1,0 +1,15 @@
+.EinBotWidget-Root {
+    height: 100vh;
+    width: 100vw;
+}
+
+.CodeEditor-Root {
+    height: 100%;
+    width: 100%;
+}
+
+.CodeEditor-Layout {
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
