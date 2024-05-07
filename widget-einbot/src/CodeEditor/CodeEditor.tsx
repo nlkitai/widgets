@@ -51,6 +51,10 @@ export const CodeEditor = ({
                 'Simulator.ts': `${simulatorTsContent}\n${setPromptIntoSimulator}`,
             }}
             className="CodeEditor-Root"
+            style={{
+                height: '100%',
+                width: '100%',
+            }}
         >
             <SandpackLayout
                 className="CodeEditor-Layout"
