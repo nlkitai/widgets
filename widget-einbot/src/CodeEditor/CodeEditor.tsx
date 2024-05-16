@@ -14,14 +14,14 @@ import simulatorTsContent from './simulatorJs';
 
 export type CodeEditorProps = {
     direction?: 'row' | 'column';
-    theme?: 'light' | 'dark';
+    colorScheme: 'light' | 'dark';
     simulatedPrompt?: string;
     files: SandpackFiles;
 }
 
 export const CodeEditor = ({
     direction = 'column',
-    theme = 'light',
+    colorScheme,
     simulatedPrompt,
     files,
 }: CodeEditorProps) => {
@@ -33,7 +33,7 @@ export const CodeEditor = ({
     return (
         <SandpackProvider
             template="react-ts"
-            theme={theme}
+            theme={colorScheme}
             options={{
                 recompileDelay: 250,
                 visibleFiles: Object.keys(files) as Array<any>,
@@ -47,7 +47,7 @@ export const CodeEditor = ({
             }}
             files={{
                 ...files,
-                'public/index.html': theme === 'light' ? indexHtmlLightContent : indexHtmlDarkContent,
+                'public/index.html': colorScheme === 'light' ? indexHtmlLightContent : indexHtmlDarkContent,
                 'index.tsx': indexTsxContent,
                 'Simulator.ts': `${simulatorTsContent}\n${setPromptIntoSimulator}`,
             }}

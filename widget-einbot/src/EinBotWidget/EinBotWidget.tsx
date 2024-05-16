@@ -8,17 +8,18 @@ import './EinBotWidget.css'
 
 type WidgetProps = {
     direction?: 'row' | 'column';
-    theme?: 'light' | 'dark';
+    colorScheme?: 'light' | 'dark';
 };
 
 function EinBotWidget(props: WidgetProps) {
     const {
-        theme = 'light',
+        colorScheme,
         direction = 'row',
     } = props;
 
+    const colorSchemeToUse = colorScheme || 'light';
     const files: SandpackFiles = {
-        'App.tsx': theme === 'light' ? exampleIntroFileAiChatBotLight : exampleIntroFileAiChatBotDark,
+        'App.tsx': colorSchemeToUse === 'light' ? exampleIntroFileAiChatBotLight : exampleIntroFileAiChatBotDark,
         'adapter.ts': exampleIntroFileStreamAdapter,
         'personas.tsx': exampleIntroFilePersonas,
     };
@@ -26,7 +27,7 @@ function EinBotWidget(props: WidgetProps) {
     return (
         <div className="EinBotWidget-Root">
             <CodeEditor
-                theme={theme}
+                colorScheme={colorSchemeToUse}
                 direction={direction}
                 files={files}
                 simulatedPrompt="How can an AI chatbot improve the user experience on my website?"

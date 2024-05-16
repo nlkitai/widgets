@@ -11,11 +11,12 @@ if (document?.body) {
 }
 
 const theme = urlParams.get('theme') as 'light' | 'dark' | undefined;
+const colorScheme = urlParams.get('colorScheme') as 'light' | 'dark' | undefined;
 const direction = urlParams.get('direction') as 'row' | 'column' | undefined;
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <EinBotWidget theme={theme} direction={direction} />
+    <EinBotWidget colorScheme={colorScheme || theme} direction={direction} />
   </React.StrictMode>,
 );
 
