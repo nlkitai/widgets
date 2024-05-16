@@ -7,7 +7,8 @@ import {
     SandpackFiles,
 } from "@codesandbox/sandpack-react";
 
-import indexHtmlContent from './indexHtml';
+import indexHtmlLightContent from './indexHtml-light';
+import indexHtmlDarkContent from './indexHtml-dark';
 import indexTsxContent from './indexTsx';
 import simulatorTsContent from './simulatorJs';
 
@@ -39,14 +40,14 @@ export const CodeEditor = ({
             }}
             customSetup={{
                 dependencies: {
-                    "@nlux/react": "latest",
-                    "@nlux/themes": "latest",
-                    "@nlux/highlighter": "latest",
+                    "@nlux/react": "^2.1.4-beta",
+                    "@nlux/themes": "^2.1.4-beta",
+                    "@nlux/highlighter": "^2.1.4-beta",
                 },
             }}
             files={{
                 ...files,
-                'public/index.html': indexHtmlContent,
+                'public/index.html': theme === 'light' ? indexHtmlLightContent : indexHtmlDarkContent,
                 'index.tsx': indexTsxContent,
                 'Simulator.ts': `${simulatorTsContent}\n${setPromptIntoSimulator}`,
             }}
@@ -65,6 +66,7 @@ export const CodeEditor = ({
                     showOpenInCodeSandbox={false}
                     showRefreshButton={true}
                     showRestartButton={true}
+                    content={'OK'}
                     style={{
                         height: '100%',
                         width: '100%',

@@ -1,6 +1,7 @@
 import {SandpackFiles} from '@codesandbox/sandpack-react';
 import {CodeEditor} from '../CodeEditor/CodeEditor';
-import exampleIntroFileAiChatBot from '../EinBotLiveExample/aiChatBot.tsx';
+import exampleIntroFileAiChatBotLight from '../EinBotLiveExample/aiChatBot-light.tsx';
+import exampleIntroFileAiChatBotDark from '../EinBotLiveExample/aiChatBot-dark.tsx';
 import exampleIntroFileStreamAdapter from '../EinBotLiveExample/adapter.tsx';
 import exampleIntroFilePersonas from '../EinBotLiveExample/personas.tsx';
 import './EinBotWidget.css'
@@ -17,7 +18,7 @@ function EinBotWidget(props: WidgetProps) {
     } = props;
 
     const files: SandpackFiles = {
-        'App.tsx': exampleIntroFileAiChatBot,
+        'App.tsx': theme === 'light' ? exampleIntroFileAiChatBotLight : exampleIntroFileAiChatBotDark,
         'adapter.ts': exampleIntroFileStreamAdapter,
         'personas.tsx': exampleIntroFilePersonas,
     };

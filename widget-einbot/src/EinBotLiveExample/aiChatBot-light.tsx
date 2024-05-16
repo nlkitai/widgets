@@ -10,15 +10,16 @@ export default () => (
       bot: {
         name: 'EinBot',
         tagline: 'Your Genius AI Assistant',
-        picture: botPictureUrl,
+        picture: botPictureUrl
       },
       user
     }}
     promptBoxOptions={{
       placeholder: 'How can I help you?'
     }}
-    layoutOptions={{
-      height: 350, maxWidth: 430
+    displayOptions={{
+      themeId: 'nova',
+      colorScheme: 'light'
     }}
   />
 );`;
