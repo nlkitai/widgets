@@ -1,4 +1,3 @@
-import {SandpackFiles} from '@codesandbox/sandpack-react';
 import {CodeEditor} from '../CodeEditor/CodeEditor';
 import exampleIntroFileAiChatBotLight from '../EinBotLiveExample/aiChatBot-light.tsx';
 import exampleIntroFileAiChatBotDark from '../EinBotLiveExample/aiChatBot-dark.tsx';
@@ -18,7 +17,7 @@ function EinBotWidget(props: WidgetProps) {
     } = props;
 
     const colorSchemeToUse = colorScheme || 'light';
-    const files: SandpackFiles = {
+    const files: Record<string, string | ((colorScheme: 'light' | 'dark') => string)> = {
         'App.tsx': colorSchemeToUse === 'light' ? exampleIntroFileAiChatBotLight : exampleIntroFileAiChatBotDark,
         'adapter.ts': exampleIntroFileStreamAdapter,
         'personas.tsx': exampleIntroFilePersonas,
