@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import "./styles.css";
 
 import App from "./App";
-import "./Simulator.ts";
+import "./simulator.ts";
 
 const root = createRoot(document.getElementById("root"));
 

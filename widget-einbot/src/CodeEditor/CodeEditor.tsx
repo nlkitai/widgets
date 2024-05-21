@@ -4,54 +4,68 @@ import {
     SandpackLayout,
     SandpackPreview,
     SandpackCodeEditor,
-    SandpackFiles,
 } from "@codesandbox/sandpack-react";
+import { SandpackFiles } from '@codesandbox/sandpack-react';
 
-import indexHtmlLightContent from './indexHtml-light';
-import indexHtmlDarkContent from './indexHtml-dark';
+import indexHtmlContent from './indexHtml';
 import indexTsxContent from './indexTsx';
 import simulatorTsContent from './simulatorJs';
 
 export type CodeEditorProps = {
+    className?: string;
     direction?: 'row' | 'column';
     colorScheme: 'light' | 'dark';
     simulatedPrompt?: string;
-    files: SandpackFiles;
+    editorHeight?: number;
+    files: Record<string, string | ((colorScheme: 'light' | 'dark') => string)>;
 }
 
 export const CodeEditor = ({
-    direction = 'column',
-    colorScheme,
+    className,
     simulatedPrompt,
+    colorScheme,
     files,
+    direction = 'column',
 }: CodeEditorProps) => {
     const setPromptIntoSimulator = useMemo(() => {
-        if (!simulatedPrompt) return '';
-        return `setTimeout(() => { nluxSimulator?.setPrompt("${simulatedPrompt}"); }, 1000);`;
+        const promptToType = simulatedPrompt || 'How can AI chatbots improve the user experience on my website?';
+        return `setTimeout(() => { nluxSimulator?.enableSimulator();\n nluxSimulator?.setPrompt("${promptToType}"); }, 1000);\n`;
     }, [simulatedPrompt]);
+
+    const uid = useMemo(() => Math.random().toString(36).substring(7), [colorScheme]);
+    const filesContent: SandpackFiles = {};
+
+    for (const [key, value] of Object.entries(files)) {
+        filesContent[key] = typeof value === 'function' ? value(colorScheme) : value;
+    }
 
     return (
         <SandpackProvider
+            key={uid}
+            className={`CodeEditor-Root${className ? ` ${className}` : ''}`}
             template="react-ts"
             theme={colorScheme}
             options={{
                 recompileDelay: 250,
                 visibleFiles: Object.keys(files) as Array<any>,
+                initMode: 'lazy',
             }}
             customSetup={{
                 dependencies: {
-                    "@nlux/react": "^2.1.4-beta",
-                    "@nlux/themes": "^2.1.4-beta",
-                    "@nlux/highlighter": "^2.1.4-beta",
+                    "react": "^18.3.1",
+                    "react-dom": "^18.3.1",
+                    "@nlux/react": "beta",
+                    "@nlux/langchain-react": "beta",
+                    "@nlux/themes": "beta",
+                    "@nlux/highlighter": "beta",
                 },
             }}
             files={{
-                ...files,
-                'public/index.html': colorScheme === 'light' ? indexHtmlLightContent : indexHtmlDarkContent,
+                ...filesContent,
+                'public/index.html': indexHtmlContent(colorScheme),
                 'index.tsx': indexTsxContent,
-                'Simulator.ts': `${simulatorTsContent}\n${setPromptIntoSimulator}`,
+                'simulator.ts': `${simulatorTsContent}\n${setPromptIntoSimulator}`,
             }}
-            className="CodeEditor-Root"
             style={{
                 height: '100%',
                 width: '100%',
@@ -66,7 +80,6 @@ export const CodeEditor = ({
                     showOpenInCodeSandbox={false}
                     showRefreshButton={true}
                     showRestartButton={true}
-                    content={'OK'}
                     style={{
                         height: '100%',
                         width: '100%',
