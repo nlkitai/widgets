@@ -1,16 +1,16 @@
 export default `import {AiChat} from '@nlux/react';
 import '@nlux/themes/nova.css';
 import {streamAdapter} from './adapter';
-import {user, botPictureUrl} from './personas';
+import {user, assistantAvatar} from './personas';
 
 export default () => (
   <AiChat
     adapter={streamAdapter}
     personaOptions={{
-      bot: {
-        name: 'EinBot',
-        tagline: 'Your Genius AI Assistant',
-        picture: botPictureUrl
+      assistant: {
+        name: 'Albert AI',
+        tagline: 'Your Einsteinian-AI Assistant',
+        avatar: assistantAvatar
       },
       user
     }}
